@@ -39,7 +39,7 @@ async function main() {
     }
 }
 
-// Appel de la fonction
+// Appel de la fonction.
 main()
 
 
