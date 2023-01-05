@@ -24,7 +24,7 @@ la création d'item plus facilement.
 async function main() {
     const items = document.querySelector('.items')
 
-    const response = await fetch('http://localhost:3000/api/products', {})
+    const response = await fetch('http://localhost:3000/api/products/', {})
     headers: {
         Accept: 'application/json'
     }
