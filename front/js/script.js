@@ -22,8 +22,6 @@ Création d'une fonction main pour pouvoir appeler
 la création d'item plus facilement.
 */
 async function main() {
-    const items = document.querySelector('.items')
-
     const response = await fetch('http://localhost:3000/api/products/', {})
     headers: {
         Accept: 'application/json'
@@ -40,6 +38,7 @@ async function main() {
 }
 
 // Appel de la fonction.
-main()
+main();
+
 
 
