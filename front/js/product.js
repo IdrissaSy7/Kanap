@@ -12,7 +12,7 @@ Fonction qui permet d'ajouter un canapé avec ses attributs
 images et alt, nom, prix, description et couleurs
  */
 async function main() {
-    fetch('http://localhost:3000/api/products/' + productId)
+    await fetch('http://localhost:3000/api/products/' + productId)
         .then(response => response.json())
         .then((article) => {
 
@@ -20,22 +20,25 @@ async function main() {
 
             document.title = article.name;
 
-            let img = document.querySelector(".item__img");
+            const img = document.querySelector(".item__img");
             img.innerHTML = `<img src="${article.imageUrl}" alt="${article.altTxt}">`;
 
-            let nomElement = document.querySelector("#title");
+            const nomElement = document.querySelector("#title");
             nomElement.innerText = article.name;
 
-            let prixElement = document.querySelector("#price");
+            const prixElement = document.querySelector("#price");
             prixElement.innerText = article.price;
 
-            let descriptionElement = document.querySelector("#description");
+            const descriptionElement = document.querySelector("#description");
             descriptionElement.innerText = article.description;
 
-            let couleurElement = document.querySelector("option");
-            couleurElement.innerText = article.colors;
+            const couleurElement = document.querySelector("#colors");
+            for (let i = 0; i < article.colors.length; i++) {
+                couleurElement.innerHTML = couleurElement.innerHTML + `<option value="${article.colors[i]}">${article.colors[i]}</option>`;
+            }
 
-        })
+        });
 }
 
+// Appel de la fonction.
 main();

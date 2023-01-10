@@ -23,9 +23,7 @@ la création d'item plus facilement.
 */
 async function main() {
     const response = await fetch('http://localhost:3000/api/products/', {})
-    headers: {
-        Accept: 'application/json'
-    }
+    
     if (!response.ok) {
         items.text = 'Impossible de charger les articles'
         return
