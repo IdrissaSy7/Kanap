@@ -37,6 +37,7 @@ fetch("http://localhost:3000/api/products/" + productId)
     const quantiteElement = document.querySelector("#quantity");
 
     const bouton = document.getElementById("addToCart");
+
     // Permet d'ajouter les attributs nom, id, couleur et
     // quantité au clic sur le bouton addToCart
     bouton.addEventListener("click", () => {
@@ -48,5 +49,55 @@ fetch("http://localhost:3000/api/products/" + productId)
       };
 
       console.log(panier);
+
+      // Permet de récuperer le panier et ses attributs et
+      // de les envoyer dans le local storage
+      function getPanier() {
+        let panier = JSON.parse(localStorage.getItem("Canape"));
+
+        if (panier === null) {
+          return [];
+        } else {
+          return panier;
+        }
+      }
+
+      // Permet d'ajouter au panier final les élements
+      // Si on a deja un élement seul la quantité sera ajoutée
+      function addPanier(produit) {
+        let panier = getPanier();
+
+        let elementPresent = panier.find(
+          // On cherche si un élement identique est déjà présent
+          (item) =>
+            item.idElement === produit.idElement &&
+            item.couleurElement === produit.couleurElement
+        );
+
+        if (elementPresent) {
+          //Element présent : on ajoute juste la quantité
+          let newQuantiteElement =
+            parseInt(elementPresent.quantiteElement) +
+            parseInt(quantiteElement.value);
+          elementPresent.quantiteElement = newQuantiteElement;
+        } else {
+          // Element pas présent : on ajoute tout le produit
+          produit.quantiteElement = quantiteElement.value;
+          panier.push(produit);
+        }
+        savePanier(panier);
+      }
+
+      // Permet de sauvegarder le panier dans le localstorage
+      function savePanier(panier) {
+        localStorage.setItem("Canape", JSON.stringify(panier));
+      }
+
+      if (couleurElement.selectedIndex === 0) {
+        alert("Merci de choisir la couleur");
+      } else {
+        addPanier(panier);
+        alert("Ajouté au panier");
+      }
     });
   });
