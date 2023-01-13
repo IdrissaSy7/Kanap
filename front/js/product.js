@@ -1,15 +1,13 @@
-//
-// Fonction qui permet de récuperer l'Id de la page
+// Permet de récuperer l'Id de la page
 // ou l'on se situe et de l'afficher dans la console
-//
+
 const url = new URL(window.location.href);
 const productId = url.searchParams.get("id");
 console.log(productId);
 
-//
-// Fonction qui permet d'ajouter un canapé avec ses attributs
+// Permet d'ajouter un canapé avec ses attributs
 // images et alt, nom, prix, description et couleurs
-//
+
 fetch("http://localhost:3000/api/products/" + productId)
   .then((response) => response.json())
   .then((article) => {
@@ -35,49 +33,20 @@ fetch("http://localhost:3000/api/products/" + productId)
         couleurElement.innerHTML +
         `<option value="${article.colors[i]}">${article.colors[i]}</option>`;
     }
-  });
 
-// Obtention des données du produit
-fetch("http://localhost:3000/api/products/" + productId)
-  .then((response) => response.json())
-  .then((article) => {
-    // Selection de la couleur et ajout au local storage
-    let select = document.querySelector("select");
-    select.addEventListener("change", function () {
-      localStorage.couleur = select.value;
-      console.log(select.value);
-    });
+    const quantiteElement = document.querySelector("#quantity");
 
-    // Selection de la quantitée et ajout au local storage
-    let quantity = document.querySelector("#quantity");
-    quantity.addEventListener("change", function () {
-      localStorage.quantity = quantity.value;
-      console.log(quantity.value);
-    });
+    const bouton = document.getElementById("addToCart");
+    // Permet d'ajouter les attributs nom, id, couleur et
+    // quantité au clic sur le bouton addToCart
+    bouton.addEventListener("click", () => {
+      let panier = {
+        nomElement: article.name,
+        idElement: productId,
+        couleurElement: couleurElement.value,
+        quantiteElement: quantiteElement.value,
+      };
 
-    // Ajout au panier avec le bouton
-    let add = document.querySelector("#addToCart");
-    add.addEventListener("click", function () {
-      if (select.selectedIndex === 0) {
-        alert("Merci de choisir la couleur");
-      } else {
-        localStorage.id = article._id;
-        localStorage.name = article.name;
-        localStorage.price = article.price;
-        console.log(localStorage);
-        alert("Ajouté au panier");
-      }
-
-      let panier = JSON.parse(localStorage.getItem("canape"));
-      if (panier) {
-        panier.push(localStorage);
-        localStorage.setItem("canape", JSON.stringify(panier));
-        console.log(panier);
-      } else {
-        panier = [];
-        panier.push(localStorage);
-        localStorage.setItem("canape", JSON.stringify(panier));
-        console.log(panier);
-      }
+      console.log(panier);
     });
   });
