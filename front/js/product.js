@@ -94,8 +94,8 @@ fetch("http://localhost:3000/api/products/" + productId)
       }
 
       if (couleurElement.selectedIndex === 0) {
-        alert("Merci de choisir la couleur");
-      } else if (quantiteElement.value == 0) {
+        alert("Merci de choisir une couleur");
+      } else if (quantiteElement.value == 0 || quantiteElement.value > 100) {
         alert("Merci de choisir une quantitée correcte");
       } else {
         addPanier(panier);
