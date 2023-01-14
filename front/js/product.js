@@ -62,6 +62,11 @@ fetch("http://localhost:3000/api/products/" + productId)
         }
       }
 
+      // Permet de sauvegarder le panier dans le localstorage
+      function savePanier(panier) {
+        localStorage.setItem("Canape", JSON.stringify(panier));
+      }
+
       // Permet d'ajouter au panier final les élements
       // Si on a deja un élement seul la quantité sera ajoutée
       function addPanier(produit) {
@@ -88,13 +93,10 @@ fetch("http://localhost:3000/api/products/" + productId)
         savePanier(panier);
       }
 
-      // Permet de sauvegarder le panier dans le localstorage
-      function savePanier(panier) {
-        localStorage.setItem("Canape", JSON.stringify(panier));
-      }
-
       if (couleurElement.selectedIndex === 0) {
         alert("Merci de choisir la couleur");
+      } else if (quantiteElement.value == 0) {
+        alert("Choisir une quantitée correcte");
       } else {
         addPanier(panier);
         alert("Ajouté au panier");
