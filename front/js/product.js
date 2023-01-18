@@ -40,7 +40,7 @@ fetch("http://localhost:3000/api/products/" + productId)
 
     // Permet d'ajouter les attributs nom, id, couleur et
     // quantité au clic sur le bouton addToCart
-    bouton.addEventListener("click", () => {
+    bouton.addEventListener("click", function () {
       let panier = {
         nomElement: article.name,
         idElement: productId,

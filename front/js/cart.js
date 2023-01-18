@@ -1,20 +1,33 @@
 let panier = JSON.parse(localStorage.getItem("Canape"));
-console.log(panier);
+// console.log(panier);
 
 for (let i = 0; i < panier.length; i++) {
   let productId = panier[i].idElement; //Id du produit du panier
+  let section = document.querySelector("#cart__items");
+  let article = document.createElement("article");
 
   fetch("http://localhost:3000/api/products/" + productId)
     .then((response) => response.json())
     .then((produit) => {
-      console.log(produit);
-      console.log(productId);
+      // console.log(produit);
+      // console.log(productId);
+
+      // Cette fonction supprime l'article
+      function deleteArticle() {
+        console.log(
+          `Suppression de l'item : 
+        nom : ${panier[i].nomElement}
+        couleur : ${panier[i].couleurElement}
+        quantitée : ${panier[i].quantiteElement}
+        ID : ${productId}
+        `
+        );
+        section.removeChild(article);
+      }
 
       // Cette fonction ajoute les élements du panier à la section cart__items
       function createArticle() {
         // Crée l'article cart__item
-        let section = document.querySelector("#cart__items");
-        let article = document.createElement("article");
         article.setAttribute("class", "cart__item");
         article.setAttribute("data-id", productId);
         article.setAttribute("data-color", panier[i].couleurElement);
@@ -79,8 +92,35 @@ for (let i = 0; i < panier.length; i++) {
         cart__item__content__settings.appendChild(
           cart__item__content__settings__delete
         );
+
+        // Bouton Supprimer
+        let boutonSuppr = cart__item__content__settings__delete;
+        boutonSuppr.addEventListener("click", function () {
+          deleteArticle();
+        });
+
+        // Changement de la quantitée
+        let boutonQuantite = cart__item__content__settings__quantity;
+        boutonQuantite.addEventListener("change", function () {
+          console.log("Changement de la quantitée");
+          console.log(boutonQuantite.closest("article"));
+          console.log(document.querySelector("input"));
+        });
       }
 
       createArticle();
     });
 }
+
+// // Quantitée
+// let boutonQuantite = cart__item__content__settings__quantity;
+// boutonQuantite.addEventListener("change", function () {
+//   console.log("Changement de la quantitée");
+//   console.log(boutonQuantite.closest("article"));
+//   console.log(document.querySelector("input"));
+// });
+
+// // let inputElem = document.querySelector("input");
+// // inputElem.addEventListener("input", function () {
+// //   console.log(inputElem.value); // Log the new value after an input is made
+// // });
