@@ -3,7 +3,6 @@
 
 const url = new URL(window.location.href);
 const productId = url.searchParams.get("id");
-console.log(productId);
 
 // Permet d'ajouter un canapé avec ses attributs
 // images et alt, nom, prix, description et couleurs
@@ -11,8 +10,6 @@ console.log(productId);
 fetch("http://localhost:3000/api/products/" + productId)
   .then((response) => response.json())
   .then((article) => {
-    console.log(article);
-
     document.title = article.name;
 
     const img = document.querySelector(".item__img");
@@ -47,8 +44,6 @@ fetch("http://localhost:3000/api/products/" + productId)
         couleurElement: couleurElement.value,
         quantiteElement: quantiteElement.value,
       };
-
-      console.log(panier);
 
       // Permet de récuperer le panier et ses attributs et
       // de les envoyer dans le local storage
