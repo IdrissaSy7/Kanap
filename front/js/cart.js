@@ -1,5 +1,4 @@
 let panier = JSON.parse(localStorage.getItem("Canape"));
-console.log(panier);
 
 for (let i = 0; i < panier.length; i++) {
   const productId = panier[i].idElement; // Id du produit du panier selectionné
@@ -109,9 +108,24 @@ for (let i = 0; i < panier.length; i++) {
               localStorage.setItem("Canape", JSON.stringify(panier));
               location.reload();
             });
+            updateTotal();
           }
         }
         updateArticle();
+
+        // Fonction qui met a jour le total
+        function updateTotal() {
+          let totalQuantity = 0;
+          let totalPrice = 0;
+          for (let k = 0; k < panier.length; k++) {
+            totalQuantity = totalQuantity + panier[k].quantiteElement;
+            totalPrice = totalPrice + panier[k].quantiteElement * produit.price;
+          }
+          let totalQuantityElement = document.getElementById("totalQuantity");
+          let totalPriceElement = document.getElementById("totalPrice");
+          totalQuantityElement.innerText = totalQuantity;
+          totalPriceElement.innerText = totalPrice;
+        }
       }
       createArticle();
     });
