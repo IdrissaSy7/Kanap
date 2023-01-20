@@ -60,6 +60,7 @@ fetch("http://localhost:3000/api/products/" + productId)
       // Permet de sauvegarder le panier dans le localstorage
       function savePanier(panier) {
         localStorage.setItem("Canape", JSON.stringify(panier));
+        console.log(localStorage);
       }
 
       // Permet d'ajouter au panier final les élements

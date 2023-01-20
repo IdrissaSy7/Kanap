@@ -1,19 +1,11 @@
 let panier = JSON.parse(localStorage.getItem("Canape"));
+console.log(panier);
 
 for (let i = 0; i < panier.length; i++) {
   const productId = panier[i].idElement; // Id du produit du panier selectionné
   const productColor = panier[i].couleurElement; // Couleur du produit du panier selectionné
   const section = document.querySelector("#cart__items");
   const article = document.createElement("article");
-
-  function deleteArticle() {
-    panier = panier.filter(
-      (items) =>
-        items.idElement !== productId || items.couleurElement !== productColor
-    );
-    localStorage.setItem("Canape", JSON.stringify(panier));
-    location.reload();
-  }
 
   fetch("http://localhost:3000/api/products/" + productId)
     .then((response) => response.json())
@@ -92,25 +84,35 @@ for (let i = 0; i < panier.length; i++) {
         Supprimer.innerHTML = `Supprimer`;
         cart__item__content__settings__delete.appendChild(Supprimer);
 
-        // Bouton Supprimer
-        const boutonSuppr = Supprimer;
-        boutonSuppr.addEventListener("click", function () {
-          deleteArticle();
-        });
+        // Fonction qui supprime l'article selectionné
+        function deleteArticle() {
+          const boutonSuppr = Supprimer;
+          boutonSuppr.addEventListener("click", function () {
+            panier = panier.filter(
+              (items) =>
+                items.idElement !== productId ||
+                items.couleurElement !== productColor
+            );
+            localStorage.setItem("Canape", JSON.stringify(panier));
+            location.reload();
+          });
+        }
+        deleteArticle();
+
+        // Fonction qui met a jour la valeur de l'article selectionné
+        function updateArticle() {
+          const articleQuantity = document.querySelectorAll(".itemQuantity");
+          for (let j = 0; j < articleQuantity.length; j++) {
+            articleQuantity[j].addEventListener("change", function () {
+              let articleQuantityValue = articleQuantity[j].valueAsNumber;
+              panier[j].quantiteElement = articleQuantityValue;
+              localStorage.setItem("Canape", JSON.stringify(panier));
+              location.reload();
+            });
+          }
+        }
+        updateArticle();
       }
       createArticle();
     });
 }
-
-// // Quantitée
-// let boutonQuantite = cart__item__content__settings__quantity;
-// boutonQuantite.addEventListener("change", function () {
-//   console.log("Changement de la quantitée");
-//   console.log(boutonQuantite.closest("article"));
-//   console.log(document.querySelector("input"));
-// });
-
-// // let inputElem = document.querySelector("input");
-// // inputElem.addEventListener("input", function () {
-// //   console.log(inputElem.value); // Log the new value after an input is made
-// // });
