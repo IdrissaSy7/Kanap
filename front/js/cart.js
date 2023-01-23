@@ -118,15 +118,33 @@ for (let i = 0; i < panier.length; i++) {
           let totalQuantity = 0;
           let totalPrice = 0;
           for (let k = 0; k < panier.length; k++) {
-            totalQuantity = totalQuantity + panier[k].quantiteElement;
-            totalPrice = totalPrice + panier[k].quantiteElement * produit.price;
+            totalQuantity = totalQuantity + parseInt(panier[k].quantiteElement);
+            fetch("http://localhost:3000/api/products/" + panier[k].idElement)
+              .then((response) => response.json())
+              .then((product) => {
+                totalPrice =
+                  totalPrice + panier[k].quantiteElement * product.price;
+                let totalQuantityElement =
+                  document.getElementById("totalQuantity");
+                let totalPriceElement = document.getElementById("totalPrice");
+                totalQuantityElement.innerText = totalQuantity;
+                totalPriceElement.innerText = totalPrice;
+              });
           }
-          let totalQuantityElement = document.getElementById("totalQuantity");
-          let totalPriceElement = document.getElementById("totalPrice");
-          totalQuantityElement.innerText = totalQuantity;
-          totalPriceElement.innerText = totalPrice;
         }
       }
       createArticle();
     });
 }
+
+let form = document.querySelector(".cart__order__form");
+let data = form.elements;
+
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  let formData = new FormData(form);
+  for (let [input, value] of formData.entries()) {
+    console.log(input + " : " + value);
+  }
+  console.table(panier);
+});
