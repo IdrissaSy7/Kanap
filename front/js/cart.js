@@ -1,5 +1,6 @@
 let panier = JSON.parse(localStorage.getItem("Canape"));
 
+// Boucle qui itère les élements du panier
 for (let i = 0; i < panier.length; i++) {
   const productId = panier[i].idElement; // Id du produit du panier selectionné
   const productColor = panier[i].couleurElement; // Couleur du produit du panier selectionné
@@ -137,14 +138,42 @@ for (let i = 0; i < panier.length; i++) {
     });
 }
 
-let form = document.querySelector(".cart__order__form");
-let data = form.elements;
+// Fonction qui crée récupere les données du formulaire, l'id des produits
+// et l'envoie vers l'api qui répond un orderId
+function order() {
+  let form = document.querySelector(".cart__order__form");
 
-form.addEventListener("submit", function (e) {
-  e.preventDefault();
-  let formData = new FormData(form);
-  for (let [input, value] of formData.entries()) {
-    console.log(input + " : " + value);
-  }
-  console.table(panier);
-});
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    let firstName = document.getElementById("firstName").value;
+    let lastName = document.getElementById("lastName").value;
+    let address = document.getElementById("address").value;
+    let city = document.getElementById("city").value;
+    let email = document.getElementById("email").value;
+
+    let contact = {
+      firstName: firstName,
+      lastName: lastName,
+      address: address,
+      city: city,
+      email: email,
+    };
+
+    let products = panier.map((product) => product.idElement);
+    let order = { contact, products };
+
+    fetch("http://localhost:3000/api/products/order", {
+      method: "POST",
+      body: JSON.stringify(order),
+      headers: {
+        "Content-type": "application/json",
+      },
+    }).then(async function (response) {
+      const numOrder = await response.json();
+      location.href = `confirmation.html?orderId=${numOrder.orderId}`;
+    });
+  });
+}
+
+order();
