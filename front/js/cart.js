@@ -147,10 +147,42 @@ function order() {
     e.preventDefault();
 
     let firstName = document.getElementById("firstName").value;
+    let firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
+    let textRegex = /^[a-zA-ZÀ-ÿ'-]+$/;
+    if (!textRegex.test(firstName)) {
+      firstNameErrorMsg.innerHTML = "Merci d'écrire un prénom correct";
+      return;
+    }
+
     let lastName = document.getElementById("lastName").value;
+    let lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
+    if (!textRegex.test(lastName)) {
+      lastNameErrorMsg.innerHTML = "Merci d'écrire un nom de famille correct";
+      return;
+    }
+
     let address = document.getElementById("address").value;
+    let addressErrorMsg = document.getElementById("addressErrorMsg");
+    let addressRegex = /^[0-9]{1,5}\s[a-zA-Z\s-éèëêàâ]+$/;
+    if (!addressRegex.test(address)) {
+      addressErrorMsg.innerHTML = "Merci d'écrire une adresse correcte";
+      return;
+    }
+
     let city = document.getElementById("city").value;
+    let cityErrorMsg = document.getElementById("cityErrorMsg");
+    if (!textRegex.test(city)) {
+      cityErrorMsg.innerHTML = "Merci d'écrire une ville correcte";
+      return;
+    }
+
     let email = document.getElementById("email").value;
+    let emailErrorMsg = document.getElementById("emailErrorMsg");
+    let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+      emailErrorMsg.innerHTML = "Merci d'écrire une adresse email correct";
+      return;
+    }
 
     let contact = {
       firstName: firstName,
