@@ -8,7 +8,7 @@ function displayOrder() {
   let orderId = document.querySelector("#orderId");
   orderId.innerText = id;
 
-  // localStorage.clear();
+  localStorage.clear();
 }
 
 displayOrder();
