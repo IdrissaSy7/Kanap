@@ -1,6 +1,6 @@
 # Kanap
 
-Projet de création d'un site e-commerce avec le backend et le frontend fourni.
+Projet de création d'un site e-commerce avec le Backend et le Frontend fourni.
 
 Création intégrale du code javascript.
 
