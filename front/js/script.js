@@ -21,7 +21,7 @@ Création d'une fonction main pour pouvoir appeler
 la création d'item plus facilement.
 */
 async function main() {
-  const response = await fetch("http://localhost:3000/api/products/", {});
+  const response = await fetch("https://apikanap.vercel.app/api/products/", {});
 
   if (!response.ok) {
     items.text = "Impossible de charger les articles";

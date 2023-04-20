@@ -7,7 +7,7 @@ const productId = url.searchParams.get("id");
 // Permet d'ajouter un canapé avec ses attributs
 // images et alt, nom, prix, description et couleurs
 
-fetch("http://localhost:3000/api/products/" + productId)
+fetch("https://apikanap.vercel.app/api/products/" + productId)
   .then((response) => response.json())
   .then((article) => {
     document.title = article.name;

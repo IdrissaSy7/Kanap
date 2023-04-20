@@ -7,7 +7,7 @@ for (let i = 0; i < panier.length; i++) {
   const section = document.querySelector("#cart__items");
   const article = document.createElement("article");
 
-  fetch("http://localhost:3000/api/products/" + productId)
+  fetch("https://apikanap.vercel.app/api/products/" + productId)
     .then((response) => response.json())
     .then((produit) => {
       // Cette fonction ajoute les élements du panier à la section cart__items
@@ -120,7 +120,9 @@ for (let i = 0; i < panier.length; i++) {
           let totalPrice = 0;
           for (let k = 0; k < panier.length; k++) {
             totalQuantity = totalQuantity + parseInt(panier[k].quantiteElement);
-            fetch("http://localhost:3000/api/products/" + panier[k].idElement)
+            fetch(
+              "https://apikanap.vercel.app/api/products/" + panier[k].idElement
+            )
               .then((response) => response.json())
               .then((product) => {
                 totalPrice =
@@ -195,7 +197,7 @@ function order() {
     let products = panier.map((product) => product.idElement);
     let order = { contact, products };
 
-    fetch("http://localhost:3000/api/products/order", {
+    fetch("https://apikanap.vercel.app/api/products/order", {
       method: "POST",
       body: JSON.stringify(order),
       headers: {
